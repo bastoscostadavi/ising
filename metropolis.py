@@ -22,7 +22,7 @@ def ising(beta,l):
 
 
 #start monte carlo algorithm where N is the number of monte carlo steps
-	N = 10000000
+	N = 500000
 	for k in range(N):
 
 
@@ -55,7 +55,8 @@ def ising(beta,l):
 	
 
 #calculate the expected value of energy and magnetization using $$Q_M=\frac{1}{M}\sum_{n=1}^{M}Q_{\mu_i}$$ using the sampling from the termalization time t onwards, and them calculate the internal energy and the average magnetization per site dividing the result by the number of sites (l**2)	
-	t = 180000
+	t = 18000
+	
 	return np.mean(np.array(E[-t:]))/l**2,np.mean(np.array(M[-t:]))/l**2,E,M
 
 
