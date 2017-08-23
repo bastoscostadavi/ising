@@ -1,17 +1,14 @@
 import numpy as np
 
-def ising(beta,l):
-	'''float,int -> float,float,list,list
-	given the temperature $\beta = \frac{1}{K_BT}$ and the size l of the system, 
-	return the expectation value of the energy and the magnetization, and the array of all E and M obtained in the simulation.
+def ising(beta,N,t,lattice):
+	'''float,int,int,int -> float,float,,float,float,list,list
+	given the temperature $\beta = \frac{1}{K_BT}$, the number of monte Carlo Steps, the termalization time measured in monte Carlo Steps and the size l of the system, 
+	return the expectation value of the energy and the magnetization and the expectation value of the square of this quantities, and the array of all E and M obtained during the simulation.
 	'''
 
-#generate lattice with cyclic boundary conditions represented by the two extra-layers 
-	lattice = np.ones([l+2,l+2])
-
-
 #calculate initial energy E0 and initial magnetization M0, and built the energy E and magnetization M lists
-	M0 = np.sum(lattice)-4*l-4
+	l = len(lattice)-2
+	M0 = np.sum(lattice[1:l+1,1:l+1])
 	E0 = 0
 	for i in range(0,l):
 		for j in range(0,l):
@@ -22,7 +19,6 @@ def ising(beta,l):
 
 
 #start monte carlo algorithm where N is the number of monte carlo steps
-	N = 500000
 	for k in range(N):
 
 
@@ -36,11 +32,13 @@ def ising(beta,l):
 		e = 2*sk*(lattice[i+1][j]+lattice[i+1][j+2]+lattice[i][j+1]+lattice[i+2][j+1])
 
 
-#change the configuration of the lattice
+#decide whether change the configuration of the lattice
 		if e < 0 or np.random.rand() < np.exp(-beta*e):
 			E += [E[k]+e]
 			M += [M[k]-2*sk]
 			lattice[i+1][j+1] = -lattice[i+1][j+1]
+
+#this part deals with the fact that the lattice is ciclic and have two extra layers.
 			if i == 0:
 				lattice[l+1][j+1] = lattice[i+1][j+1]
 			if i == l-1:
@@ -52,12 +50,17 @@ def ising(beta,l):
 		else:
 			E += [E[k]]
 			M += [M[k]]
-	
 
-#calculate the expected value of energy and magnetization using $$Q_M=\frac{1}{M}\sum_{n=1}^{M}Q_{\mu_i}$$ using the sampling from the termalization time t onwards, and them calculate the internal energy and the average magnetization per site dividing the result by the number of sites (l**2)	
-	t = 18000
-	
-	return np.mean(np.array(E[-t:]))/l**2,np.mean(np.array(M[-t:]))/l**2,E,M
+
+#Calculate the average energy per particle, the average magnetization per particle, the specific heat and the magnetic susceptibility	
+	energy_sampling = np.array(E[-t:])/l**2
+	magnetization_sampling = np.array(M[-t:])/l**2
+	average_energy = np.mean(energy_sampling)
+	average_magnetization = np.mean(magnetization_sampling)
+	specific_heat = (beta**2/l**2)*(np.mean(energy_sampling**2)-average_energy**2)
+	magnetic_susceptibility = (beta*l**2)*(np.mean(magnetization_sampling**2)-average_magnetization**2)
+
+	return average_energy,average_magnetization,specific_heat,magnetic_susceptibility,lattice,E,M
 
 
 	

@@ -4,13 +4,21 @@ import ast
 import matplotlib.pyplot as plt
 
 file_name = sys.argv[1]
-l = 5
+
 data = open(file_name,'r')
+
 T = np.array(range(2,52,2))/10
-X = ast.literal_eval(data.readlines()[2])
-plt.plot(T,X,'.',label='n=%ix%i'%(l,l))
-plt.title('Magnetização por partícula por temperatura',fontsize=20)
-plt.ylabel('Magnetização por partícula',fontsize=20)
-plt.xlabel('Temperatura',fontsize=20)
-plt.legend()
+
+X = ast.literal_eval(data.readline())
+
+plt.plot(T,X,'.')
+
+#label='n=%ix%i'%(l,l)
+
+#plt.title('Magnetização por partícula por temperatura',fontsize=20)
+#plt.ylabel('Magnetização por partícula',fontsize=20)
+#plt.xlabel('Temperatura',fontsize=20)
+#plt.legend()
+
+
 plt.show()
