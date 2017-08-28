@@ -21,7 +21,6 @@ def ising(beta,N,t,lattice):
 #start monte carlo algorithm where N is the number of monte carlo steps
 	for k in range(N):
 
-
 #choose ij-spin to invert
 		i = np.random.randint(0,l)
 		j = np.random.randint(0,l) 
