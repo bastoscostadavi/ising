@@ -4,8 +4,32 @@ import ast
 import matplotlib.pyplot as plt
 
 
-file_name = sys.argv[1]
+a = ['energy','magnetization','heat','susceptibility']
+k = 3
 
+file_name = sys.argv[1]
+data = open(file_name,'r')
+T = ast.literal_eval(data.readline())
+X = ast.literal_eval(data.readline())
+plt.plot(T,X,label='l=%i'%15)
+data = open('data/'+a[k]+'_l25_N100000000_t500000.txt','r')
+T = ast.literal_eval(data.readline())
+X = ast.literal_eval(data.readline())
+plt.plot(T,X,label='l=%i'%25)
+data = open('data/'+a[k]+'_l20_N100000000_t500000.txt','r')
+T = ast.literal_eval(data.readline())
+X = ast.literal_eval(data.readline())
+plt.plot(T,X,label = 'l=%i'%20)
+data = open('data/data_set_1/heat.txt','r')
+T = ast.literal_eval(data.readline())
+X = ast.literal_eval(data.readline())
+plt.plot(T,X,label = 'l=%i'%10)
+plt.grid(True)
+plt.legend()
+plt.title('Energia interna por temperatura',fontsize=20)
+plt.ylabel('Energia interna',fontsize=20)
+plt.xlabel('Temperatura',fontsize=20)
+plt.show()
 
 
 
@@ -22,22 +46,6 @@ for N in [1,10,100,1000,10000,100000,1000000,10000000,100000000-1]:
 '''
 
 
-data = open(file_name,'r')
-T = ast.literal_eval(data.readline())
-X = ast.literal_eval(data.readline())
-plt.plot(T,X,'.',color='black')
-T = ast.literal_eval(data.readline())
-X = ast.literal_eval(data.readline())
-plt.plot(T,X,'.',color='black')
-data = open('data/magnetization.txt','r')
-T = ast.literal_eval(data.readline())
-X = ast.literal_eval(data.readline())
-plt.plot(T,X,'.')
-plt.grid(True)
-plt.title('Energia interna por temperatura',fontsize=20)
-plt.ylabel('Energia interna',fontsize=20)
-plt.xlabel('Temperatura',fontsize=20)
-plt.show()
 
 '''
 data = open('data/magnetization.txt','r')
