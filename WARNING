@@ -1,0 +1,12 @@
+as simulações com l = {15,20,25}:
+energy é energia por partícula
+magnetization é magnetização por partícula
+heat é calor específico por partícula divido por N^2
+susceptibility é a susceptibilidade por partícula
+
+as simulações com l = {30,35,40}:
+energy é energia 
+magnetization é magnetização
+heat é calor específico
+susceptibility é a susceptibilidade
+

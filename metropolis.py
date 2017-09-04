@@ -51,13 +51,13 @@ def ising(beta,N,t,lattice):
 			M += [M[k]]
 
 
-#Calculate the average energy per particle, the average magnetization per particle, the specific heat and the magnetic susceptibility	
+#Calculate the average energy, the average magnetization, the specific heat and the magnetic susceptibility	
 	energy_sampling = np.array(E[-t:])
-	magnetization_sampling = np.array(M[-t:])/l**2
+	magnetization_sampling = np.array(M[-t:])
 	average_energy = np.mean(energy_sampling)
-	average_magnetization = np.mean(magnetization_sampling)
-	specific_heat = (beta**2/l**2)*(np.mean(energy_sampling**2)-average_energy**2)
-	magnetic_susceptibility = (beta*l**2)*(np.mean(magnetization_sampling**2)-average_magnetization**2)
+	average_magnetization = np.mean(np.abs(magnetization_sampling))
+	specific_heat = (beta**2)*(np.mean(energy_sampling**2)-average_energy**2)
+	magnetic_susceptibility = (beta)*(np.mean(magnetization_sampling**2)-average_magnetization**2)
 
 	return average_energy,average_magnetization,specific_heat,magnetic_susceptibility,lattice,E,M
 

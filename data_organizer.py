@@ -9,13 +9,13 @@ files = os.listdir(path)
 for file_name in files:
 	path = 'data/'+file_name
 	data = open(path, 'r')
-	T = ast.literal_eval(data.readline())
-	X = ast.literal_eval(data.readline())	
-	Z = []	
-	for k in range(len(T)):		
-		if T[k] in model:
-			Z += [X[k]]
+	T1 = ast.literal_eval(data.readline())
+	X1 = ast.literal_eval(data.readline())
+	T2 = ast.literal_eval(data.readline())
+	X2 = ast.literal_eval(data.readline())	
 	data.close()
-	words = file_name.split('_')
-	data = open(words[0]+'_'+words[1][1:], 'w')
-	data.write(str(Z))
+	T = T1 + T2
+	X = X1 + X2
+	data = open(path, 'w')
+	data.write(str(T)+'\n'+str(X))
+	data.close()

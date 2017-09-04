@@ -6,23 +6,70 @@ import matplotlib.pyplot as plt
 property = sys.argv[1]
 
 #Temperatures
-T = np.array([0.2,0.4,0.6,0.8,1,1.2,1.4,1.6,1.8,1.9,2,2.1,2.2,2.4,2.6,2.8,3,3.2,3.4,3.6,3.8,4,4.2,4.4,4.6,4.8,5])
-
-#Reduced temperature
-Tc = 2.269
-t = (T-Tc)/Tc
 
 
-lenght = [5,15,20,25]
+lenght = [7,9,11,13,15,17]
 for l in lenght:
-	data = open('data_set_2/'+property+'_%i'%l,'r')
-	X = np.array(ast.literal_eval(data.readline()))*l**4
-	plt.plot(t,X,label='l=%i'%l)
-	#*l**(1/9)
-	
-plt.grid(True)
-plt.legend()
-plt.title('Energia interna por temperatura',fontsize=20)
-plt.ylabel('Energia interna',fontsize=20)
-plt.xlabel('Temperatura',fontsize=20)
+	data = open('data_set_4/' + property + '_l%i_N1000000_t250000.txt'%l,'r')
+	T = np.array(ast.literal_eval(data.readline()))
+	Tc = 2.269
+	t = (T-Tc)/Tc
+	X = np.array(ast.literal_eval(data.readline()))/l**2
+	plt.subplot(211)
+	plt.plot(t,X,'.',label='N=%i'%l**2)
+	plt.ylabel('Calor Específico',fontsize=20)
+	plt.xlabel('Temperatura reduzida',fontsize=20)	
+	plt.legend()
+	plt.subplot(212)
+	plt.plot(t*l,X,'.',label='N=%i'%l**2)
+	plt.ylabel('Scaling Function',fontsize=20)
+	plt.xlabel('Temperatura reduzida',fontsize=20)
+	plt.legend()
 plt.show()
+
+
+'''Plot magnetization and magnetization scaling function
+lenght = [7,9,11,13,15,17]
+for l in lenght:
+	data = open('data_set_4/' + property + '_l%i_N1000000_t250000.txt'%l,'r')
+	T = np.array(ast.literal_eval(data.readline()))
+	Tc = 2.269
+	t = (T-Tc)/Tc
+	X = np.array(ast.literal_eval(data.readline()))/l**2
+	plt.subplot(211)
+	plt.plot(t,X,label='N=%i'%l**2)
+	plt.xlim((-0.4,1))
+	plt.ylabel('Magnetização',fontsize=20)
+	plt.xlabel('Temperatura reduzida',fontsize=20)	
+	plt.legend()
+	plt.subplot(212)
+	plt.plot(t*l,X*l**(1/8),label='N=%i'%l**2)
+	plt.xlim((-6,6))
+	plt.ylabel('Scaling Function',fontsize=20)
+	plt.xlabel('Temperatura reduzida',fontsize=20)
+	plt.legend()
+plt.show()
+'''
+
+'''Plot susceptibility and susceptibility scaling function:
+lenght = [7,9,11,13,15,17]
+for l in lenght:
+	data = open('data_set_4/' + property + '_l%i_N1000000_t250000.txt'%l,'r')
+	T = np.array(ast.literal_eval(data.readline()))
+	Tc = 2.269
+	t = (T-Tc)/Tc
+	X = np.array(ast.literal_eval(data.readline()))/l**2
+	plt.subplot(211)
+	plt.plot(t[10:40],X[10:40],'.',label='N=%i'%l**2)
+	plt.xlim((-0.2,0.3))	
+	plt.ylabel('Susceptibilidade',fontsize=20)
+	plt.xlabel('Temperatura reduzida',fontsize=20)	
+	plt.legend()
+	plt.subplot(212)
+	plt.plot(t[10:40]*l,X[10:40]*l**(-7/4),'.',label='N=%i'%l**2)
+	plt.xlim((-2,4))
+	plt.ylabel('Scaling Function',fontsize=20)
+	plt.xlabel('Temperatura reduzida',fontsize=20)
+	plt.legend()
+plt.show()
+'''
